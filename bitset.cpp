@@ -3,6 +3,7 @@
 //
 
 #include "bitset.h"
+#include <cassert>
 
 namespace vmo {
 
@@ -102,7 +103,7 @@ namespace vmo {
 
     // BITSET
 
-    Bitset::Bitset() : capacity(1), _size(0) {
+    Bitset::Bitset() : capacity(1) {
         data = new value_type[capacity];
     }
 
@@ -110,5 +111,25 @@ namespace vmo {
         delete [] data;
     }
 
+    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size) {
+        data = new value_type[capacity];
+    }
 
+    Bitset::Bitset(const Bitset & other) {
+        capacity = other.capacity;
+        _size = other._size;
+        data = new value_type[other.capacity];
+
+        for (int i = 0; i < _size; ++i) {
+            assert(other.data != nullptr && "pointer other.data is null");
+            data[i] = other.data[i];
+        }
+    }
+
+    Bitset::Bitset(Bitset && other) noexcept {
+        capacity = other.capacity;
+        _size = other._size;
+        data = other.data;
+        other.data = nullptr;
+    }
 } // vmo

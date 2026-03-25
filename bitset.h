@@ -1,7 +1,3 @@
-//
-// Created by Михолап Иван on 25.03.26.
-//
-
 #ifndef BITSET_BITSET_H
 #define BITSET_BITSET_H
 

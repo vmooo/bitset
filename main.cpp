@@ -4,6 +4,9 @@
 class TestBitset {
 public:
     void Run() {
+        vmo::Bitset bitset(10);
+        vmo::Bitset bitset_copy(bitset);
+
 
     }
 };

@@ -97,7 +97,7 @@ namespace vmo {
         return ptr[n];
     }
 
-    ptrdiff_t operator-(const Bitset::Iterator& first, const Bitset::Iterator& second) {
+    difference_type operator-(const Bitset::Iterator& first, const Bitset::Iterator& second) {
         return first.ptr - second.ptr;
     }
 
@@ -178,13 +178,15 @@ namespace vmo {
     }
 
     void Bitset::set(const size_type index) {
+        assert(data != nullptr);
+
         if (index < _size) {
         }
         else if (index < capacity) {
             _size = index + 1;
         }
         else {
-            size_type multiplied_capacity = 2 * capacity;
+            const size_type multiplied_capacity = 2 * capacity;
             const size_type new_capacity = (index < multiplied_capacity ? multiplied_capacity : index + 1);
             reallocate(new_capacity);
 
@@ -195,10 +197,29 @@ namespace vmo {
     }
 
     bool Bitset::test(const size_type index) const {
+        assert(data != nullptr);
+
         if (index < capacity) {
             return data[index];
         }
         return false;
+    }
+
+    bool Bitset::operator[](const size_type index) const {
+        assert(data != nullptr);
+        return test(index);
+    }
+
+    size_type Bitset::size() const {
+        return _size;
+    }
+
+    Bitset::Iterator Bitset::begin() const {
+        return Iterator(data);
+    }
+
+    Bitset::Iterator Bitset::end() const {
+        return Iterator(data + _size);
     }
 
 } // vmo

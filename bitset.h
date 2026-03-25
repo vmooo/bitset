@@ -50,7 +50,7 @@ namespace vmo {
 
             reference operator[](difference_type) const;
 
-            friend ptrdiff_t operator-(const Iterator &, const Iterator &);
+            friend difference_type operator-(const Iterator &, const Iterator &);
         };
 
     private:
@@ -58,8 +58,8 @@ namespace vmo {
         size_type _size{};
         size_type capacity{};
 
-        inline void reallocate(size_type);
-        inline void change_index(size_type);
+        void reallocate(size_type);
+        void change_index(size_type);
 
     public:
         Bitset();
@@ -84,6 +84,9 @@ namespace vmo {
         size_type size() const;
         bool empty() const;
         void clear();
+
+        Iterator begin() const;
+        Iterator end() const;
     };
 } // vmo
 

@@ -12,11 +12,11 @@ namespace vmo {
         using const_reference = const value_type &;
         using size_type = std::size_t;
         using difference_type = std::ptrdiff_t;
+        using pointer = value_type *;
 
         class Iterator {
         public:
             using iterator_category = std::random_access_iterator_tag;
-            using pointer = value_type *;
             using reference = value_type &;
 
         private:
@@ -54,9 +54,12 @@ namespace vmo {
         };
 
     private:
-        value_type *data{};
+        pointer data{};
         size_type _size{};
         size_type capacity{};
+
+        inline void reallocate(size_type);
+        inline void change_index(size_type);
 
     public:
         Bitset();
@@ -65,7 +68,10 @@ namespace vmo {
         explicit Bitset(size_type);
 
         Bitset(const Bitset &);
-        Bitset(Bitset &&) noexcept ;
+        Bitset(Bitset &&) noexcept;
+
+        Bitset &operator=(const Bitset &);
+        Bitset &operator=(Bitset &&) noexcept;
 
         void set(size_type);
         bool test(size_type) const;

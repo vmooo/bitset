@@ -1,7 +1,3 @@
-//
-// Created by Михолап Иван on 25.03.26.
-//
-
 #include "../include/bitset.h"
 
 #include <algorithm>
@@ -134,7 +130,7 @@ namespace vmo {
         delete [] data;
     }
 
-    Bitset::Bitset(const size_type _size) : _size(_size + 1), capacity(_size + 1) {
+    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size + 1) {
         data = new value_type[capacity];
     }
 
@@ -219,7 +215,7 @@ namespace vmo {
         if (_size < other._size) {
            std::swap(new_size, min_size);
         }
-        Bitset result(std::max(capacity, other.capacity));
+        Bitset result(new_size);
 
         for (size_type i = 0; i < min_size; ++i) {
             result.data[i] = data[i] | other.data[i];
@@ -234,6 +230,7 @@ namespace vmo {
                 result.data[i] = other.data[i];
             }
         }
+        return result;
     }
 
     size_type Bitset::size() const {

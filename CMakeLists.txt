@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(bitset
-        bitset.cpp
-        bitset.h
+        src/bitset.cpp
+        include/bitset.h
         main.cpp)

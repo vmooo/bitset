@@ -2,8 +2,11 @@
 // Created by Михолап Иван on 25.03.26.
 //
 
-#include "bitset.h"
+#include "../include/bitset.h"
+
+#include <algorithm>
 #include <cassert>
+#include <iostream>
 
 namespace vmo {
 
@@ -131,7 +134,7 @@ namespace vmo {
         delete [] data;
     }
 
-    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size) {
+    Bitset::Bitset(const size_type _size) : _size(_size + 1), capacity(_size + 1) {
         data = new value_type[capacity];
     }
 
@@ -186,7 +189,7 @@ namespace vmo {
             _size = index + 1;
         }
         else {
-            const size_type multiplied_capacity = 2 * capacity;
+            const size_type multiplied_capacity = capacity_multiplier * capacity;
             const size_type new_capacity = (index < multiplied_capacity ? multiplied_capacity : index + 1);
             reallocate(new_capacity);
 
@@ -208,6 +211,29 @@ namespace vmo {
     bool Bitset::operator[](const size_type index) const {
         assert(data != nullptr);
         return test(index);
+    }
+
+    Bitset Bitset::union_with(const Bitset &other) {
+        size_type new_size = _size;
+        size_type min_size = other._size;
+        if (_size < other._size) {
+           std::swap(new_size, min_size);
+        }
+        Bitset result(std::max(capacity, other.capacity));
+
+        for (size_type i = 0; i < min_size; ++i) {
+            result.data[i] = data[i] | other.data[i];
+        }
+        if (new_size == _size) {
+            for (size_type i = min_size; i < new_size; ++i) {
+                result.data[i] = data[i];
+            }
+        }
+        else {
+            for (size_type i = min_size; i < new_size; ++i) {
+                result.data[i] = other.data[i];
+            }
+        }
     }
 
     size_type Bitset::size() const {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
-#include "bitset.h"
+#include "include/bitset.h"
 
 class TestBitset {
 public:
@@ -20,13 +20,13 @@ public:
             std::cout << bitset[i];
         }
 
-        std::cout << "\n";
+        std::cout << '\n';
 
         for (auto it = bitset.begin(); it != bitset.end(); ++it) {
             std::cout << *it;
         }
 
-        std::cout << "\n";
+        std::cout << '\n';
 
         bitset_copy.set(3);
         bitset_copy.set(20);
@@ -35,11 +35,17 @@ public:
             std::cout << value;
         });
 
-        std::cout << "\n";
+        std::cout << '\n';
 
         vmo::Bitset new_bitset(std::move(bitset));
         //std::cout << bitset[0];
         for (const auto& value : new_bitset) {
+            std::cout << value;
+        }
+
+        std::cout << '\n' << "union_with:\n";
+        const vmo::Bitset bitset_union = bitset_copy.union_with(new_bitset);
+        for (const auto& value : bitset_union) {
             std::cout << value;
         }
 

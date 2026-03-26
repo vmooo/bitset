@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
-#include "include/bitset.h"
+#include "../include/bitset.h"
 
 class TestBitset {
 public:

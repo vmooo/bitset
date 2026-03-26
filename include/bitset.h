@@ -22,7 +22,6 @@ namespace vmo {
         private:
             pointer ptr{};
 
-
         public:
 
             explicit Iterator(pointer);
@@ -62,7 +61,7 @@ namespace vmo {
         static constexpr size_type capacity_multiplier = 2;
 
         void reallocate(size_type);
-        void change_index(size_type);
+        void change_index(size_type) const;
 
     public:
         Bitset();
@@ -80,7 +79,7 @@ namespace vmo {
         bool test(size_type) const;
         bool operator[](size_type) const;
 
-        Bitset union_with(const Bitset &);
+        Bitset union_with(const Bitset &) const;
         Bitset intersection_with(const Bitset &);
         bool is_subset(const Bitset &) const;
 

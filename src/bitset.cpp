@@ -114,7 +114,7 @@ namespace vmo {
         data = new_data;
     }
 
-    inline void Bitset::change_index(const size_type index) {
+    inline void Bitset::change_index(const size_type index) const {
         assert(index < capacity);
         assert(index < _size);
         data[index] ^= 1;
@@ -209,7 +209,7 @@ namespace vmo {
         return test(index);
     }
 
-    Bitset Bitset::union_with(const Bitset &other) {
+    Bitset Bitset::union_with(const Bitset &other) const {
         size_type new_size = _size;
         size_type min_size = other._size;
         if (_size < other._size) {

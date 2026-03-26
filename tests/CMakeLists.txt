@@ -5,13 +5,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_executable(bitset_tests
-        test_bitset.cpp
-)
+add_executable(bitset_tests test_bitset.cpp)
 
-target_link_libraries(bitset_tests PRIVATE
-        bitset
-        gtest_main
+target_link_libraries(bitset_tests PRIVATE bitset gtest_main)
+
+target_include_directories(bitset_tests PUBLIC
+        ${gtest_SOURCE_DIR}/googletest/include
 )
 
 include(GoogleTest)

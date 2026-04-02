@@ -104,10 +104,9 @@ namespace vmo {
 
     // PRIVATE MEMBERS
 
-    inline void Bitset::change_index(const size_type index) const {
-        assert(index < capacity);
+    inline void Bitset::flip(const size_type index) const noexcept{
         assert(index < _size);
-        data.get()[index] ^= 1;
+        data[index] ^= 1;
     }
 
     // PUBLIC METHODS
@@ -186,7 +185,7 @@ namespace vmo {
             _size = index + 1;
             capacity = new_capacity;
         }
-        change_index(index);
+        flip(index);
     }
 
     bool Bitset::test(const size_type index) const {

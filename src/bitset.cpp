@@ -150,6 +150,8 @@ namespace vmo {
         _size = other._size;
         data = other.data;
         other.data = nullptr;
+        other.capacity = 0;
+        other._size = 0;
     }
 
     Bitset& Bitset::operator=(const Bitset & other) {
@@ -235,6 +237,10 @@ namespace vmo {
 
     size_type Bitset::size() const {
         return _size;
+    }
+
+    bool Bitset::empty() const {
+        return _size == 0;
     }
 
     Bitset::Iterator Bitset::begin() const {

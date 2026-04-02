@@ -76,12 +76,20 @@ namespace vmo {
         Bitset &operator=(const Bitset &);
         Bitset &operator=(Bitset &&) noexcept;
 
+        // O(1) time
         void set(size_type);
+
+        //@time O(1)
         bool test(size_type) const;
         bool operator[](size_type) const;
 
+        //@time O(max(size1, size2))
         Bitset union_with(const Bitset &) const;
+
+        //@time O(min(size1, size2))
         Bitset intersection_with(const Bitset &) const;
+
+        //@time O(min(size1, size2))
         bool is_subset(const Bitset &) const;
 
         size_type size() const;

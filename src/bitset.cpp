@@ -227,7 +227,16 @@ namespace vmo {
         return result;
     }
 
+    Bitset Bitset::intersection_with(const Bitset &other) const {
+        const size_type new_size = std::min(_size, other._size);
 
+        Bitset result(new_size);
+
+        for (size_type i = 0; i < new_size; ++i) {
+            result.data[i] = data[i] & other.data[i];
+        }
+        return result;
+    }
 
     size_type Bitset::size() const {
         return _size;

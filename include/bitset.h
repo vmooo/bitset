@@ -82,7 +82,7 @@ namespace vmo {
         bool operator[](size_type) const;
 
         Bitset union_with(const Bitset &) const;
-        Bitset intersection_with(const Bitset &);
+        Bitset intersection_with(const Bitset &) const;
         bool is_subset(const Bitset &) const;
 
         size_type size() const;

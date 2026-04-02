@@ -165,3 +165,21 @@ TEST(BitsetTests, isNotEmpty) {
     ASSERT_TRUE(bitset.empty() == false);
 }
 
+TEST(BitsetTests, intersectionWith1) {
+    vmo::Bitset bitset(3);
+    vmo::Bitset bitset2(4);
+    vmo::Bitset intersection(bitset.intersection_with(bitset2));
+    ASSERT_TRUE(intersection.size() == 3);
+}
+
+TEST(BitsetTests, intersectionWith2) {
+    vmo::Bitset bitset(3);
+    bitset.set(0);
+    bitset.set(1);
+    bitset.set(2);
+    vmo::Bitset bitset2 = bitset;
+    vmo::Bitset intersection(bitset.intersection_with(bitset2));
+    for (int i = 0; i < 3; ++i) {
+        ASSERT_TRUE(intersection[i] == true);
+    }
+}

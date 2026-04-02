@@ -80,24 +80,24 @@ namespace vmo {
         void set(size_type);
 
         //@time O(1)
-        bool test(size_type) const;
+        [[nodiscard]] bool test(size_type) const;
         bool operator[](size_type) const;
 
         //@time O(max(size1, size2))
-        Bitset union_with(const Bitset &) const;
+        [[nodiscard]] Bitset union_with(const Bitset &) const;
 
         //@time O(min(size1, size2))
-        Bitset intersection_with(const Bitset &) const;
+        [[nodiscard]] Bitset intersection_with(const Bitset &) const;
 
         //@time O(min(size1, size2))
-        bool is_subset(const Bitset &) const;
+        [[nodiscard]] bool is_subset(const Bitset &) const;
 
-        size_type size() const;
-        bool empty() const;
+        [[nodiscard]] size_type size() const;
+        [[nodiscard]] bool empty() const;
         void clear();
 
-        Iterator begin() const;
-        Iterator end() const;
+        [[nodiscard]] Iterator begin() const;
+        [[nodiscard]] Iterator end() const;
 
         friend void swap(Bitset &, Bitset &) noexcept;
     };

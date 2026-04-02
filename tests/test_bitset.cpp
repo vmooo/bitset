@@ -210,3 +210,39 @@ TEST(BitsetTests, clear) {
     bitset.clear();
     ASSERT_TRUE(bitset.empty() == true);
 }
+
+// Bitset::Iterator tests
+
+TEST(BitsetIteratorTests, rangeBasedLoop1) {
+    vmo::Bitset bitset(10);
+    for (auto a : bitset) {
+        ASSERT_TRUE(a == false);
+    }
+}
+
+TEST(BitsetIteratorTests, rangeBasedLoop2) {
+    vmo::Bitset bitset(3);
+    bitset.set(0);
+    bitset.set(1);
+    bitset.set(2);
+    for (auto a : bitset) {
+        ASSERT_TRUE(a == true);
+    }
+}
+
+TEST(BitsetIteratorTests, forEach1) {
+    vmo::Bitset bitset(10);
+    std::for_each(bitset.begin(), bitset.end(), [&](auto a) {
+        ASSERT_TRUE(a == false);
+    });
+}
+
+TEST(BitsetIteratorTests, forEach2) {
+    vmo::Bitset bitset(3);
+    bitset.set(0);
+    bitset.set(1);
+    bitset.set(2);
+    std::for_each(bitset.begin(), bitset.end(), [&](auto a) {
+        ASSERT_TRUE(a == true);
+    });
+}

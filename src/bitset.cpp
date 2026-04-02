@@ -255,6 +255,13 @@ namespace vmo {
         return _size == 0;
     }
 
+    void Bitset::clear() {
+        delete[] data.get();
+        capacity = 1;
+        _size = 0;
+        data = std::make_unique<value_type[]>(capacity);
+    }
+
     Bitset::Iterator Bitset::begin() const {
         return Iterator(data.get());
     }

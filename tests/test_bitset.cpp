@@ -204,3 +204,9 @@ TEST(BitsetTests, isSubset3) {
     bitset.set(2);
     ASSERT_TRUE(bitset.is_subset(bitset2) == false);
 }
+
+TEST(BitsetTests, clear) {
+    vmo::Bitset bitset(10);
+    bitset.clear();
+    ASSERT_TRUE(bitset.empty() == true);
+}

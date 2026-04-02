@@ -164,8 +164,6 @@ namespace vmo {
     void Bitset::set(const size_type index) {
         assert(data.get() != nullptr);
 
-        if (index < _size) {
-        }
         if (index < capacity) {
             _size = index + 1;
         }
@@ -211,9 +209,7 @@ namespace vmo {
 
     Bitset Bitset::intersection_with(const Bitset &other) const {
         const size_type new_size = std::min(_size, other._size);
-
         Bitset result(new_size);
-
         for (size_type i = 0; i < new_size; ++i) {
             result.data[i] = data[i] & other.data[i];
         }

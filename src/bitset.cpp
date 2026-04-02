@@ -129,7 +129,7 @@ namespace vmo {
 
         for (int i = 0; i < _size; ++i) {
             assert(other.data.get() != nullptr && "pointer other.data is null");
-            data.get()[i] = other.data.get()[i];
+            data[i] = other.data[i];
         }
     }
 
@@ -149,7 +149,7 @@ namespace vmo {
 
             for (int i = 0; i < _size; ++i) {
                 assert(other.data != nullptr && "pointer other.data is null");
-                data.get()[i] = other.data.get()[i];
+                data[i] = other.data[i];
             }
         }
         return *this;
@@ -178,7 +178,7 @@ namespace vmo {
 
             auto new_data = std::make_unique<value_type[]>(new_capacity);
             for (int i = 0; i < _size; ++i) {
-                new_data.get()[i] = data.get()[i];
+                new_data[i] = data[i];
             }
 
             data = std::move(new_data);
@@ -226,6 +226,8 @@ namespace vmo {
         }
         return result;
     }
+
+
 
     size_type Bitset::size() const {
         return _size;

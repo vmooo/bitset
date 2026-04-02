@@ -147,16 +147,8 @@ namespace vmo {
     {}
 
     Bitset& Bitset::operator=(const Bitset & other) {
-        if (this != &other) {
-            capacity = other.capacity;
-            _size = other._size;
-            data = std::make_unique<value_type[]>(other.capacity);
-
-            for (int i = 0; i < _size; ++i) {
-                assert(other.data != nullptr && "pointer other.data is null");
-                data[i] = other.data[i];
-            }
-        }
+        Bitset new_bitset(other);
+        swap(*this, new_bitset);
         return *this;
     }
 
@@ -272,6 +264,12 @@ namespace vmo {
 
     Bitset::Iterator Bitset::end() const {
         return Iterator(data.get() + _size);
+    }
+
+    void swap(Bitset &lhs, Bitset &rhs) noexcept {
+        std::swap(lhs.capacity, rhs.capacity);
+        std::swap(lhs._size, rhs._size);
+        std::swap(lhs.data, rhs.data);
     }
 
 } // vmo

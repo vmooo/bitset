@@ -90,6 +90,8 @@ namespace vmo {
 
         Iterator begin() const;
         Iterator end() const;
+
+        friend void swap(Bitset &, Bitset &) noexcept;
     };
 } // vmo
 

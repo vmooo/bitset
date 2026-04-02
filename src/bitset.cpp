@@ -117,7 +117,7 @@ namespace vmo {
 
     Bitset::~Bitset() = default;
 
-    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size + 1) {
+    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size) {
         data = std::make_unique<value_type[]>(capacity);
     }
 

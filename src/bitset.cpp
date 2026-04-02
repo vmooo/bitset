@@ -18,7 +18,9 @@ namespace vmo {
 
     // BITSET::ITERATOR
 
-    Bitset::Iterator::Iterator(pointer _ptr) : ptr(_ptr) {}
+    Bitset::Iterator::Iterator(pointer _ptr)
+    : ptr(_ptr)
+    {}
 
     reference Bitset::Iterator::operator*() const {
         return *ptr;
@@ -111,13 +113,18 @@ namespace vmo {
 
     // PUBLIC METHODS
 
-    Bitset::Bitset() : capacity(1) {
+    Bitset::Bitset()
+    : capacity(1)
+    {
         data = std::make_unique<value_type[]>(capacity);
     }
 
     Bitset::~Bitset() = default;
 
-    Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size) {
+    Bitset::Bitset(const size_type _size)
+    : _size(_size)
+    , capacity(_size)
+    {
         data = std::make_unique<value_type[]>(capacity);
     }
 
@@ -133,13 +140,11 @@ namespace vmo {
         }
     }
 
-    Bitset::Bitset(Bitset && other) noexcept {
-        capacity = other.capacity;
-        _size = other._size;
-        data = std::move(other.data);
-        other.capacity = 0;
-        other._size = 0;
-    }
+    Bitset::Bitset(Bitset && other) noexcept
+    : data(std::move(other.data))
+    , _size(std::exchange(other._size, 0))
+    , capacity(std::exchange(other.capacity, 0))
+    {}
 
     Bitset& Bitset::operator=(const Bitset & other) {
         if (this != &other) {

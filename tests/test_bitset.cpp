@@ -183,3 +183,24 @@ TEST(BitsetTests, intersectionWith2) {
         ASSERT_TRUE(intersection[i] == true);
     }
 }
+
+TEST(BitsetTests, isSubset1) {
+    vmo::Bitset bitset(10);
+    vmo::Bitset bitset2(3);
+    ASSERT_TRUE(bitset.is_subset(bitset2) == true);
+}
+
+TEST(BitsetTests, isSubset2) {
+    vmo::Bitset bitset(10);
+    vmo::Bitset bitset2(3);
+    bitset.set(2);
+    bitset2.set(2);
+    ASSERT_TRUE(bitset.is_subset(bitset2) == true);
+}
+
+TEST(BitsetTests, isSubset3) {
+    vmo::Bitset bitset(10);
+    vmo::Bitset bitset2(3);
+    bitset.set(2);
+    ASSERT_TRUE(bitset.is_subset(bitset2) == false);
+}

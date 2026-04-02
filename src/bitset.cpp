@@ -238,6 +238,15 @@ namespace vmo {
         return result;
     }
 
+    bool Bitset::is_subset(const Bitset & other) const {
+        for (size_type i = 0; i < _size; ++i) {
+            if (data[i] != other[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     size_type Bitset::size() const {
         return _size;
     }

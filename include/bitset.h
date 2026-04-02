@@ -62,7 +62,6 @@ namespace vmo {
 
         static constexpr size_type capacity_multiplier = 2;
 
-        void reallocate(size_type);
         inline void flip(size_type) const noexcept;
 
     public:

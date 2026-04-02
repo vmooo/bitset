@@ -121,13 +121,14 @@ namespace vmo {
         data = std::make_unique<value_type[]>(capacity);
     }
 
-    Bitset::Bitset(const Bitset & other) {
-        capacity = other.capacity;
-        _size = other._size;
-        data = std::make_unique<value_type[]>(capacity);
-
-        for (int i = 0; i < _size; ++i) {
-            assert(other.data.get() != nullptr && "pointer other.data is null");
+    Bitset::Bitset(const Bitset & other)
+    : data(std::make_unique<value_type[]>(other.capacity))
+    , _size(other._size)
+    , capacity(other.capacity)
+    {
+        assert(other.data.get() != nullptr);
+        assert(other.capacity != 0);
+        for (size_type i = 0; i < _size; ++i) {
             data[i] = other.data[i];
         }
     }

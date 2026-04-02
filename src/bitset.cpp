@@ -104,52 +104,39 @@ namespace vmo {
 
     // PRIVATE MEMBERS
 
-    inline void Bitset::reallocate(const size_type new_capacity) {
-        const auto new_data = new value_type[new_capacity];
-        for (int i = 0; i < _size; ++i) {
-            assert(new_data != nullptr && "pointer other.data is null");
-            new_data[i] = data[i];
-        }
-        delete[] data;
-        data = new_data;
-    }
-
     inline void Bitset::change_index(const size_type index) const {
         assert(index < capacity);
         assert(index < _size);
-        data[index] ^= 1;
+        data.get()[index] ^= 1;
     }
 
     // PUBLIC METHODS
 
     Bitset::Bitset() : capacity(1) {
-        data = new value_type[capacity];
+        data = std::make_unique<value_type[]>(capacity);
     }
 
-    Bitset::~Bitset() {
-        delete [] data;
-    }
+    Bitset::~Bitset() = default;
 
     Bitset::Bitset(const size_type _size) : _size(_size), capacity(_size + 1) {
-        data = new value_type[capacity];
+        data = std::make_unique<value_type[]>(capacity);
     }
 
     Bitset::Bitset(const Bitset & other) {
         capacity = other.capacity;
         _size = other._size;
-        data = new value_type[other.capacity];
+        data = std::make_unique<value_type[]>(capacity);
 
         for (int i = 0; i < _size; ++i) {
-            assert(other.data != nullptr && "pointer other.data is null");
-            data[i] = other.data[i];
+            assert(other.data.get() != nullptr && "pointer other.data is null");
+            data.get()[i] = other.data.get()[i];
         }
     }
 
     Bitset::Bitset(Bitset && other) noexcept {
         capacity = other.capacity;
         _size = other._size;
-        data = other.data;
-        other.data = nullptr;
+        data = std::move(other.data);
         other.capacity = 0;
         other._size = 0;
     }
@@ -158,11 +145,11 @@ namespace vmo {
         if (this != &other) {
             capacity = other.capacity;
             _size = other._size;
-            data = new value_type[other.capacity];
+            data = std::make_unique<value_type[]>(other.capacity);
 
             for (int i = 0; i < _size; ++i) {
                 assert(other.data != nullptr && "pointer other.data is null");
-                data[i] = other.data[i];
+                data.get()[i] = other.data.get()[i];
             }
         }
         return *this;
@@ -172,14 +159,13 @@ namespace vmo {
         if (this != &other) {
             capacity = other.capacity;
             _size = other._size;
-            data = other.data;
-            other.data = nullptr;
+            data = std::move(other.data);
         }
         return *this;
     }
 
     void Bitset::set(const size_type index) {
-        assert(data != nullptr);
+        assert(data.get() != nullptr);
 
         if (index < _size) {
         }
@@ -189,7 +175,13 @@ namespace vmo {
         else {
             const size_type multiplied_capacity = capacity_multiplier * capacity;
             const size_type new_capacity = (index < multiplied_capacity ? multiplied_capacity : index + 1);
-            reallocate(new_capacity);
+
+            auto new_data = std::make_unique<value_type[]>(new_capacity);
+            for (int i = 0; i < _size; ++i) {
+                new_data.get()[i] = data.get()[i];
+            }
+
+            data = std::move(new_data);
 
             _size = index + 1;
             capacity = new_capacity;
@@ -201,13 +193,13 @@ namespace vmo {
         assert(data != nullptr);
 
         if (index < capacity) {
-            return data[index];
+            return data.get()[index];
         }
         return false;
     }
 
     bool Bitset::operator[](const size_type index) const {
-        assert(data != nullptr);
+        assert(data.get() != nullptr);
         return test(index);
     }
 
@@ -244,11 +236,11 @@ namespace vmo {
     }
 
     Bitset::Iterator Bitset::begin() const {
-        return Iterator(data);
+        return Iterator(data.get());
     }
 
     Bitset::Iterator Bitset::end() const {
-        return Iterator(data + _size);
+        return Iterator(data.get() + _size);
     }
 
 } // vmo

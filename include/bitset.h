@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <stdexcept>
+#include <memory>
 
 namespace vmo {
     class Bitset {
@@ -13,6 +14,7 @@ namespace vmo {
         using size_type = std::size_t;
         using difference_type = std::ptrdiff_t;
         using pointer = value_type *;
+        using const_pointer = const value_type *;
 
         class Iterator {
         public:
@@ -54,7 +56,7 @@ namespace vmo {
         };
 
     private:
-        pointer data{};
+        std::unique_ptr<value_type[]> data{};
         size_type _size{};
         size_type capacity{};
 

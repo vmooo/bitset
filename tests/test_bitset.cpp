@@ -41,6 +41,12 @@ TEST(BitsetTests, SetAndTest5) {
     ASSERT_TRUE(bitset[0] == true);
 }
 
+TEST(BitsetTests, SetAndTest6) {
+    vmo::Bitset bitset;
+    bitset.set(0);
+    ASSERT_TRUE(bitset[0] == true);
+}
+
 TEST(BitsetTests, SetAndTestOutside) {
     const vmo::Bitset bitset(1);
     ASSERT_TRUE(bitset[10] == false);
@@ -146,12 +152,20 @@ TEST(BitsetTests, union_with4) {
 TEST(BitsetTests, union_with5) {
     vmo::Bitset bitset;
     vmo::Bitset bitset2(3);
-    bitset2.set(2);
-    bitset2.set(1);
     bitset2.set(0);
+    bitset2.set(1);
+    bitset2.set(2);
     vmo::Bitset _union(bitset.union_with(bitset2));
-    for (int i = 0; i < 3; ++i) {
+    for (size_t i = 0; i < bitset.size(); ++i) {
         ASSERT_TRUE(_union[i] == true);
+    }
+}
+
+TEST(BitsetTests, union_with6) {
+    vmo::Bitset bitset;
+    vmo::Bitset bitset2(3);
+    for (size_t i = 0; i < 3; ++i) {
+        ASSERT_TRUE(bitset[i] == false);
     }
 }
 

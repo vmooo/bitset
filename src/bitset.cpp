@@ -166,7 +166,7 @@ namespace vmo {
 
         if (index < _size) {
         }
-        else if (index < capacity) {
+        if (index < capacity) {
             _size = index + 1;
         }
         else {
@@ -201,25 +201,10 @@ namespace vmo {
     }
 
     Bitset Bitset::union_with(const Bitset &other) const {
-        size_type new_size = _size;
-        size_type min_size = other._size;
-        if (_size < other._size) {
-           std::swap(new_size, min_size);
-        }
+        const size_type new_size = std::max(_size, other._size);
         Bitset result(new_size);
-
-        for (size_type i = 0; i < min_size; ++i) {
-            result.data[i] = data[i] | other.data[i];
-        }
-        if (new_size == _size) {
-            for (size_type i = min_size; i < new_size; ++i) {
-                result.data[i] = data[i];
-            }
-        }
-        else {
-            for (size_type i = min_size; i < new_size; ++i) {
-                result.data[i] = other.data[i];
-            }
+        for (size_type i = 0; i < new_size; ++i) {
+            result.data[i] = test(i) | other[i];
         }
         return result;
     }
